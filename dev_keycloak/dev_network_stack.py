@@ -14,7 +14,8 @@ class DevNetworkStack(Stack):
         self.vpc = ec2.Vpc(
             self,
             'MyVpc',
-            cidr='10.1.0.0/16',
+            # cidr='10.1.0.0/16',
+            ip_addresses=ec2.IpAddresses.cidr('10.1.0.0/16'),
             max_azs=2,
             subnet_configuration=[
                 ec2.SubnetConfiguration(
@@ -35,3 +36,32 @@ class DevNetworkStack(Stack):
                 ),
             ]
         )
+
+        # Create Cluster
+        cluster = ecs.Cluster(
+            self, 
+            'ecs-cluster',
+            vpc=self.vpc
+        )
+
+        # Create ALB
+        self.lb = elbv2.ApplicationLoadBalancer(
+            self, 
+            "LB",
+            vpc=self.vpc,
+            internet_facing=True
+        )
+
+        listener = self.lb.add_listener(
+            "PublicListner",
+            port=80,
+            open=True
+        )
+
+        # Attach ALB to ECS Service
+        listener.add_targets(
+            "ECS",
+            port=80,
+            targets=[service],
+        )
+        
