@@ -177,6 +177,7 @@ class DevKeycloakStack(Stack):
             enable_execute_command=True,
             enable_ecs_managed_tags=True,
         )
+        
 
         # fargate_service.service.connections.security_groups[0].add_ingress_rule(
         #     peer = ec2.Peer.ipv4(vpc.vpc_cidr_blocke),
