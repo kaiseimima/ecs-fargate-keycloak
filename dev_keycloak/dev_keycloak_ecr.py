@@ -1,6 +1,7 @@
 from aws_cdk import core
 from aws_cdk import aws_ecr
 
+# ecr repositoryを作成する
 class AwsCdkFargateBatchStack(core.Stack):
 
     def __init__(self, scope: core.Construct, id: str, **kwargs) -> None:
@@ -9,7 +10,7 @@ class AwsCdkFargateBatchStack(core.Stack):
         # ====================================
         # ECR
         # ====================================
-        ecr_repository = ecr_aws.Repository(
+        ecr_repository = aws_ecr.Repository(
             self,
             id='ecr_repository',
             repository_name='sample_repository'
