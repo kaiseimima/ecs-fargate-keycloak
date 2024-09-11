@@ -11,10 +11,9 @@ class DevNetworkStack(Stack):
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
-        self.vpc = ec2.Vpc(
-            self,
-            'MyVpc',
-            # cidr='10.1.0.0/16',
+
+        vpc = ec2.vpc(
+            self, "Vpc",
             ip_addresses=ec2.IpAddresses.cidr('10.1.0.0/16'),
             max_azs=2,
             subnet_configuration=[
